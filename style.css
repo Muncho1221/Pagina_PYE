@@ -1,0 +1,227 @@
+:root {
+    --primary: #1e3a8a;
+    --primary-light: #3b82f6;
+    --bg: #f0f9ff;
+    --card: #ffffff;
+    --text: #1e3a8a;
+    --border: #bfdbfe;
+    --accent: #dbeafe;
+}
+
+body { 
+    font-family: 'Courier New', Courier, monospace; 
+    margin: 0; 
+    background-color: var(--bg);
+    image-rendering: pixelated;
+    color: var(--text); 
+    line-height: 1.3; 
+    font-size: 14px; 
+}
+
+header { 
+    background-color: var(--primary);
+    padding: 1.5rem 0.8rem; 
+    text-align: center; 
+    color: white; 
+    border-bottom: 4px solid #1d4ed8;
+    box-shadow: 0 4px 0 rgba(0,0,0,0.1);
+}
+
+header h1 {
+    text-shadow: 2px 2px 0px #000;
+    margin: 0;
+    font-size: 24px;
+}
+
+nav { display: flex; justify-content: center; gap: 8px; margin-top: 15px; }
+
+.tab-btn { 
+    padding: 5px 12px; 
+    border: 2px solid #ffffff; 
+    background: var(--primary-light); 
+    color: white; 
+    cursor: pointer; 
+    font-size: 13px;
+    font-family: inherit;
+}
+
+.tab-btn.active { 
+    background: #ffffff; 
+    color: var(--primary); 
+    border-color: var(--primary);
+    font-weight: bold; 
+}
+
+main { max-width: 900px; margin: 20px auto; padding: 0 10px; }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+.card { 
+    background-color: var(--card);
+    border: 4px solid var(--primary);
+    padding: 20px; 
+    margin-bottom: 20px; 
+    box-shadow: 6px 6px 0px var(--border);
+}
+
+h2, h3 { 
+    margin: 0 0 12px 0; 
+    font-size: 18px; 
+    color: var(--primary);
+    text-transform: uppercase;
+    background: var(--accent);
+    display: inline-block;
+    padding: 4px 10px;
+    border-left: 4px solid var(--primary);
+}
+
+textarea, input { 
+    width: 100%; 
+    padding: 8px; 
+    border: 2px solid var(--primary);
+    background: #ffffff;
+    font-family: inherit;
+    font-size: 13px; 
+    margin: 4px 0; 
+    box-sizing: border-box; 
+    color: var(--primary);
+}
+
+.button-group { display: flex; gap: 10px; margin-top: 10px; }
+
+button { 
+    padding: 8px 16px; 
+    border: 2px solid #000; 
+    cursor: pointer; 
+    font-weight: bold; 
+    font-size: 13px;
+    font-family: inherit;
+    box-shadow: 2px 2px 0px rgba(0,0,0,0.5);
+    transition: transform 0.1s;
+}
+
+button:active {
+    transform: translate(1px, 1px);
+    box-shadow: 1px 1px 0px rgba(0,0,0,0.5);
+}
+
+button.primary { background: #3b82f6; color: white; }
+button.secondary { background: #93c5fd; color: var(--primary); }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; }
+
+.table-container { 
+    max-height: 200px; 
+    overflow-y: auto; 
+    border: 2px solid var(--primary);
+    background: white;
+}
+
+table { width: 100%; border-collapse: collapse; font-size: 12px; }
+th, td { padding: 5px; text-align: center; border: 1px solid var(--border); }
+th { background: var(--accent); position: sticky; top: 0; color: var(--primary); }
+
+.chart-container { 
+    height: 250px; 
+    background: white !important;
+    border: 1px solid var(--border);
+}
+
+.results-box { 
+    background-color: var(--accent);
+    border: 2px dashed var(--primary);
+    padding: 15px; 
+    font-size: 14px; 
+    min-height: 64px;
+    color: var(--primary);
+    font-weight: bold;
+}
+
+.tree-container { 
+    font-family: 'Courier New', monospace; 
+    font-size: 12px; 
+    white-space: pre; 
+    background: #ffffff; 
+    padding: 10px; 
+    border: 2px solid var(--primary); 
+}
+
+.hidden { display: none; }
+.error { color: #dc2626; font-weight: bold; margin-top: 5px; }
+
+footer { 
+    text-align: center; 
+    padding: 20px; 
+    color: var(--primary); 
+    font-size: 12px;
+    border-top: 2px solid var(--primary);
+    background: var(--accent);
+}
+
+.hidden, #overlay.hidden { display: none !important; }
+/* Overlay de carga con Gatos (GIFs) */
+#overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(30, 58, 138, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.overlay-content {
+    background: var(--primary);
+    padding: 30px;
+    border: 4px solid #ffffff;
+    text-align: center;
+    box-shadow: 8px 8px 0px #000;
+    color: #f0f9ff;
+}
+
+.overlay-content h3 {
+    margin: -30px -30px 20px -30px;
+    padding: 15px;
+    color: #f0f9ff;
+    border: none;
+    background: rgba(0,0,0,0.3);
+    display: block;
+    border-bottom: 2px solid #ffffff;
+}
+
+#overlay-msg {
+    color: #f0f9ff;
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+.overlay-content img {
+    max-width: 128px;
+    image-rendering: pixelated;
+    border: 2px solid var(--primary);
+    margin-top: 10px;
+}
+
+/* Imágenes de Gatos laterales (JPGs) */
+.side-img {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 50;
+    pointer-events: none;
+}
+
+#side-jpg {
+    max-width: 150px;
+    height: auto;
+    border: 4px solid var(--primary);
+    background: white;
+    padding: 5px;
+    box-shadow: 4px 4px 0px rgba(0,0,0,0.2);
+    image-rendering: pixelated;
+}
+
+@media (max-width: 1200px) {
+    .side-img { display: none; }
+}
