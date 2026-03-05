@@ -11,6 +11,16 @@ function showTab(tabId) {
     }
 }
 
+function toggleDarkMode() {
+    document.body.classList.toggle('dark-mode');
+    const isDark = document.body.classList.contains('dark-mode');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    const btn = document.getElementById('theme-toggle');
+    if (btn) {
+        btn.textContent = isDark ? '☀️ Modo Claro' : '🌙 Modo Oscuro';
+    }
+}
+
 function showLoading(callback, isError = false) {
     const overlay = document.getElementById('overlay');
     const gifImg = document.getElementById('overlay-gif');
@@ -47,6 +57,64 @@ function updateSideImage() {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
+    const settingsBtn = document.getElementById('settings-btn');
+    const settingsPanel = document.getElementById('settings-panel');
+    const bgMusic = document.getElementById('bg-music');
+    const volumeControl = document.getElementById('volume-control');
+    const muteBtn = document.getElementById('mute-btn');
+    const themeToggle = document.getElementById('theme-toggle');
+
+    // Toggle Settings Panel
+    if (settingsBtn && settingsPanel) {
+        settingsBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            settingsPanel.classList.toggle('hidden');
+        });
+
+        // Close panel when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!settingsPanel.contains(e.target) && e.target !== settingsBtn) {
+                settingsPanel.classList.add('hidden');
+            }
+        });
+    }
+
+    // Audio Controls
+    if (bgMusic && volumeControl && muteBtn) {
+        bgMusic.volume = volumeControl.value;
+
+        volumeControl.addEventListener('input', () => {
+            bgMusic.volume = volumeControl.value;
+            if (bgMusic.volume > 0) {
+                bgMusic.muted = false;
+                muteBtn.textContent = '🔇 Silenciar';
+            }
+        });
+
+        muteBtn.addEventListener('click', () => {
+            bgMusic.muted = !bgMusic.muted;
+            muteBtn.textContent = bgMusic.muted ? '🔊 Activar Sonido' : '🔇 Silenciar';
+        });
+
+        // Try to play music on first interaction (due to browser policies)
+        const startMusic = () => {
+            bgMusic.play().catch(() => {});
+            document.removeEventListener('click', startMusic);
+            document.removeEventListener('keydown', startMusic);
+        };
+        document.addEventListener('click', startMusic);
+        document.addEventListener('keydown', startMusic);
+    }
+
+    // Initialize Dark Mode
+    if (themeToggle) {
+        themeToggle.addEventListener('click', toggleDarkMode);
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+            themeToggle.textContent = '☀️ Modo Claro';
+        }
+    }
+
     if (typeof Chart !== 'undefined') {
         Chart.defaults.font.family = "'Press Start 2P', cursive";
         Chart.defaults.font.size = 8;
@@ -236,23 +304,6 @@ function calculateMultiplicative() {
     document.getElementById('mult-results').innerHTML = `Total: ${s.reduce((a,b)=>a*b,1).toLocaleString()} (${s.join('×')})`;
     renderTree(s);
 }
-
-function renderTree(s) {
-    const res = document.getElementById('tree-diagram');
-    if (!res) return;
-    if (s.reduce((a,b)=>a*b,1) > 100) { res.innerHTML = 'Árbol demasiado grande (>100 resultados)'; return; }
-    let o = "Raíz\n";
-    function b(l, p) {
-        if (l === s.length) return;
-        for (let i=1; i<=s[l]; i++) {
-            const last = i===s[l]; 
-            o += p + (last ? "└── " : "├── ") + `Etapa ${l+1} Op ${i}\n`;
-            b(l+1, p + (last ? "    " : "│   "));
-        }
-    }
-    b(0, ""); res.textContent = o;
-}
-
 
 function renderTree(s) {
     const res = document.getElementById('tree-diagram');
